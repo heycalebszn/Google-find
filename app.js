@@ -3,7 +3,7 @@ const axios = require('axios');
 const ExcelJS = require('exceljs');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 const GOOGLE_API_KEY = '';
 
 app.get('/export-solar-farms', async (req, res) => {
