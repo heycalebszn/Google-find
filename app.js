@@ -4,17 +4,15 @@ const ExcelJS = require('exceljs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-const GOOGLE_API_KEY = 'YOUR_GOOGLE_API_KEY';
+const GOOGLE_API_KEY = '';
 
 app.get('/export-solar-farms', async (req, res) => {
   try {
     const searchUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=solar+farm+West+Africa&key=${GOOGLE_API_KEY}`;
-    
     const response = await axios.get(searchUrl);
     const places = response.data.results;
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet('Solar Farms - West Africa');
-  
     worksheet.columns = [
       { header: 'Name', key: 'name', width: 30 },
       { header: 'Address', key: 'address', width: 50 },
@@ -32,7 +30,6 @@ app.get('/export-solar-farms', async (req, res) => {
     });
     
     const buffer = await workbook.xlsx.writeBuffer();
-  
     res.setHeader('Content-Disposition', 'attachment; filename="solar_farms_west_africa.xlsx"');
     res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
     res.send(buffer);
